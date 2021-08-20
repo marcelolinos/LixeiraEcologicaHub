@@ -23,65 +23,64 @@ import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
-import UpgradeToPro from "views/Upgrade.js";
+//import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Painel",
     icon: "nc-icon nc-bank",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/icons",
-    name: "Icons",
+    name: "Matérial no Portal",
     icon: "nc-icon nc-diamond",
     component: Icons,
     layout: "/admin",
   },
   {
     path: "/maps",
-    name: "Maps",
+    name: "Disponível na zona",
     icon: "nc-icon nc-pin-3",
     component: Maps,
     layout: "/admin",
   },
   {
     path: "/notifications",
-    name: "Notifications",
+    name: "Notificações",
     icon: "nc-icon nc-bell-55",
     component: Notifications,
     layout: "/admin",
   },
   {
     path: "/user-page",
-    name: "User Profile",
+    name: "Perfil",
     icon: "nc-icon nc-single-02",
     component: UserPage,
     layout: "/admin",
   },
   {
     path: "/tables",
-    name: "Table List",
+    name: "Meus matérias",
     icon: "nc-icon nc-tile-56",
     component: TableList,
     layout: "/admin",
   },
   {
+    path: "/login",
+    name: "Sair",
+    icon: "nc-icon nc-caps-small",
+    component: Typography,
+    layout: "/login",
+    },
+   {
     path: "/typography",
     name: "Typography",
     icon: "nc-icon nc-caps-small",
     component: Typography,
     layout: "/admin",
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
-    layout: "/admin",
-  },
+  }
 ];
 export default routes;
