@@ -23,6 +23,8 @@ import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
+import Publish from "views/Publish";
+import Published from "views/Published";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -32,6 +34,13 @@ var routes = [
     icon: "nc-icon nc-bank",
     component: Dashboard,
     layout: "/admin",
+  },
+  {
+    path: "/publish",
+    name: "Publicações",
+    icon: "nc-icon nc-single-copy-04",
+    component: Publish,
+    layout: "/admin"
   },
   {
     path: "/icons",
@@ -81,6 +90,13 @@ var routes = [
     icon: "nc-icon nc-caps-small",
     component: Typography,
     layout: "/admin",
+  },
+  {
+    path: "/published/:id",
+    name: "Publicação",
+    icon: "",
+    component: Published,
+    layout: "/admin"
   }
 ];
 export default routes;
