@@ -24,6 +24,8 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import Login from "views/Login.js";
+import Publish from "views/Publish.js";
+import Published from "views/Published.js";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
