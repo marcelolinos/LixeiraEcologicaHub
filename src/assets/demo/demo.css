@@ -205,3 +205,12 @@
   outline: none;
   display: none;
 }
+
+.login-layout {
+  background-color: #f4f3ef;
+}
+
+.login-form {
+  width: 700px;
+  margin: auto;
+}

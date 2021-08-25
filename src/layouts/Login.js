@@ -16,25 +16,29 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import Sidebar from "components/Sidebar/Sidebar";
+import DemoNavbar from "components/Navbars/DemoNavbar";
+import Footer from "components/Footer/Footer";
 import React from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import routes from "routes";
 
 
 function Login(props) {
   return (
-    <div>
+    <div className="wrapper login-layout">
+      <div>LIXEIRA ECOLÓGICA <hr /></div>
       <Switch>
-          {routes.map((prop, key) => {
-            return (
-              <Route
-                path={prop.layout + prop.path}
-                component={prop.component}
-                key={key}
-              />
-            );
-          })}
-          </Switch>
+        {routes.map((prop, key) => {
+          return (
+            <Route
+              path={prop.layout + prop.path}
+              component={prop.component}
+              key={key}
+            />
+          );
+        })}
+      </Switch>
     </div>
   );
 }
