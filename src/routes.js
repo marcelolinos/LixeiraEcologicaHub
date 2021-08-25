@@ -23,9 +23,13 @@ import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
+
 import Publish from "views/Publish";
 import Published from "views/Published";
 import CreatePublish from "views/CreatePublish";
+import Login from "views/Login.js";
+import Publish from "views/Publish.js";
+import Published from "views/Published.js";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -82,7 +86,7 @@ var routes = [
     path: "/login",
     name: "Sair",
     icon: "nc-icon nc-user-run",
-    component: Typography,
+    component: Login,
     layout: "/login",
     },
    {
