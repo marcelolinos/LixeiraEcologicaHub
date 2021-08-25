@@ -25,6 +25,7 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import Publish from "views/Publish";
 import Published from "views/Published";
+import CreatePublish from "views/CreatePublish";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -94,8 +95,15 @@ var routes = [
   {
     path: "/published/:id",
     name: "Publicação",
-    icon: "",
+    icon: null,
     component: Published,
+    layout: "/admin"
+  },
+  {
+    path: "/create-publish",
+    name: "Criar Publicação",
+    icon: null,
+    component: CreatePublish,
     layout: "/admin"
   }
 ];
