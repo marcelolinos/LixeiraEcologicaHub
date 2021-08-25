@@ -35,7 +35,7 @@ function Login(props) {
         <hr />
       </p>
       </div>
-      <div className="text-center mb-5">
+      <div className="text-center mb-5 pb-5">
         <p className="h3 my-1">Bem vindo!</p>
         <p>Estamos felizes por ter você conosco! Cadastre-se para saber mais.</p>
       </div>

@@ -4,7 +4,7 @@ import { FormGroup, Form, Input, Col, Row, Button, Card } from "reactstrap"
 const Login = () => {
 
     return (
-        <Col className="mx-auto" md="5">
+        <Col className="mx-auto" md="4">
             <Card className="card-user">
                 <Form>
                     <div>
