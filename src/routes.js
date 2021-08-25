@@ -28,8 +28,7 @@ import Publish from "views/Publish";
 import Published from "views/Published";
 import CreatePublish from "views/CreatePublish";
 import Login from "views/Login.js";
-import Publish from "views/Publish.js";
-import Published from "views/Published.js";
+
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
