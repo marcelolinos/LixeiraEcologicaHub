@@ -71,7 +71,7 @@ var routes = [
   {
     path: "/login",
     name: "Sair",
-    icon: "nc-icon nc-caps-small",
+    icon: "nc-icon nc-user-run",
     component: Typography,
     layout: "/login",
     },
