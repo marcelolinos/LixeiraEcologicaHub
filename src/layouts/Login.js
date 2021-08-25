@@ -27,7 +27,18 @@ import routes from "routes";
 function Login(props) {
   return (
     <div className="wrapper login-layout">
-      <div>LIXEIRA ECOLÓGICA <hr /></div>
+      <div className="text-center"> <p
+        className="simple-text logo-normal h1"
+      >
+        <i className="nc-icon nc-atom" />
+        Lixeira Ecológica
+        <hr />
+      </p>
+      </div>
+      <div className="text-center mb-5">
+        <p className="h3 my-1">Bem vindo!</p>
+        <p>Estamos felizes por ter você conosco! Cadastre-se para saber mais.</p>
+      </div>
       <Switch>
         {routes.map((prop, key) => {
           return (

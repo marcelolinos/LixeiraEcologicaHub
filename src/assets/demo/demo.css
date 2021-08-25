@@ -206,6 +206,12 @@
   display: none;
 }
 
+.login-logo {
+  text-align: center;
+  font-size: 2em;
+  color: #333333;
+}
+
 .login-layout {
   background-color: #f4f3ef;
 }
