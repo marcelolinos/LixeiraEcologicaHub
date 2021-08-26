@@ -25,6 +25,7 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import Publish from "views/Publish";
 import Published from "views/Published";
+import CadastroUsuario from "views/CadastroUsuario";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -89,6 +90,11 @@ var routes = [
     name: "Typography",
     icon: "nc-icon nc-caps-small",
     component: Typography,
+    layout: "/admin",
+    },
+   {
+    path: "/cadastroUsuario",
+    component: CadastroUsuario,
     layout: "/admin",
   },
   {
