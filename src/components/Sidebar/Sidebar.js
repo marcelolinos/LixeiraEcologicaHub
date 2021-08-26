@@ -71,7 +71,6 @@ function Sidebar(props) {
         <Nav>
           {props.routes.map((prop, key) => {
             return (
-              prop.icon != null ? 
               <li
                 className={
                   activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
@@ -87,11 +86,6 @@ function Sidebar(props) {
                   <p>{prop.name}</p>
                 </NavLink>
               </li>
-              :
-
-              <>
-
-              </>
             );
           })}
         </Nav>

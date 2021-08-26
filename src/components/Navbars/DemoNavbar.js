@@ -139,14 +139,6 @@ function Header(props) {
           </form>
           <Nav navbar>
             <NavItem>
-              <Link to="/admin/create-publish" className="nav-link btn-magnify">
-                <i className="nc-icon nc-simple-add" />
-                <p>
-                  <span className="d-lg-none d-md-block">Nova Publicação</span>
-                </p>
-              </Link>
-            </NavItem>
-            <NavItem>
               <Link to="#pablo" className="nav-link btn-magnify">
                 <i className="nc-icon nc-layout-11" />
                 <p>
