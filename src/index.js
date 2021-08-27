@@ -34,5 +34,7 @@ ReactDOM.render(
       <Redirect to="/admin/dashboard" />
     </Switch>
   </BrowserRouter>,
-  document.getElementById("root")
+    document.getElementById("root")
+  
 );
+

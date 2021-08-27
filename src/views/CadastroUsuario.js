@@ -92,17 +92,42 @@ function CadastroUsuario() {
                         />
                       </FormGroup>
                     </Col>
-                  </Row>
-                  <Row>
                     <Col className="pr-1" md="4">
                       <FormGroup>
-                        <label htmlFor="cep">CEP</label>
+                        <label htmlFor="telefone">Telefone</label>
                         <Input
+                          //defaultValue="00000-000"
+                          placeholder="(00)00000-0000"
+                          id="telefone"
+                          type="text"
+                        />
+                      </FormGroup>
+                                      </Col>
+                                      <Col className="pr-1" md="4">
+                      <FormGroup>
+                        <label htmlFor="cep">CEP</label>
+                        <Input onChange=""
+                                                  
                           //defaultValue="00000-000"
                           placeholder="00000-000"
                           id="cep"
                           type="text"
+                         
                         />
+                      </FormGroup>
+                    </Col>
+                    
+                  </Row>
+                <Row>
+                    <Col className="px-1" md="4">
+                      <FormGroup>
+                        <label htmlFor="cidade">Estado</label>
+                          <Input
+                            defaultValue=""
+                            id="uf"
+                            placeholder="Digite aqui"
+                            type="text"
+                          />
                       </FormGroup>
                     </Col>
                     <Col className="px-1" md="4">
@@ -162,7 +187,32 @@ function CadastroUsuario() {
                         />
                       </FormGroup>
                     </Col>
+                    </Row>
+                    <Row>
+                    <Col md="6">
+                      <FormGroup>
+                        <label htmlFor="senha">Senha</label>
+                        <Input
+                          defaultValue=""
+                          id="senha"
+                          placeholder="Digite aqui"
+                          type="password"
+                        />
+                      </FormGroup>
+                        </Col>
+                        <Col md="6">
+                      <FormGroup>
+                        <label htmlFor="repitaasenha">Repita a senha</label>
+                        <Input
+                          defaultValue=""
+                          id="repitaasenha"
+                          placeholder="Digite aqui"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
+                                  
                   <Row>
                     <div className="update ml-auto mr-auto">
                       <Button
@@ -181,7 +231,7 @@ function CadastroUsuario() {
         </Row>
       </div>
     </>
-  );
+    );
 }
 
 export default CadastroUsuario;
