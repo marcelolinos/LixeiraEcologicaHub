@@ -74,8 +74,10 @@ const List = [
                                             <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
                                         </svg>                                          
                                     </h2>
+                                    <p className="descrip">Publicado: {publicacao.data}</p>
                                     <h5 >Descrição</h5>
                                     <p className="descrip">{publicacao.descricao}</p>
+                                    
                                 </CardBody>
                             </Row>
                             <CardFooter>
