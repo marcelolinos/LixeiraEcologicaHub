@@ -95,18 +95,18 @@ function User() {
       <div className="content">
         <Row>
           <Col md="12">
-            <Card className="card-stats">
+            <Card className="">
               <CardBody>
-                <Row xs="4">
-                  <Col xs="2" className="px-3">
+                <Row xs="2">
+                  <Col xl="2" md="3" sm="4" className="px-3">
                     <img
                       alt="..."
                       className="avatar border-gray"
                       src={require("assets/img/mike.jpg").default}
-                      width="50"
+                      id="avatar-img"
                     />
                   </Col>
-                  <Col xs="9" className="text-left">
+                  <Col xl="9" md="9" sm="8" className="text-left">
                     <h5>Chet Faker</h5>
                     <p>michael23@Gmail.com</p>
                     <p className="description">
