@@ -1,7 +1,11 @@
 import React from 'react';
 import { Form, Input, Col, Button, Card } from "reactstrap"
 
-const Login = () => {
+const Login = (props) => {
+
+    const redirecionar = (e) => {
+        props.history.push('/admin/dashboard')
+    }
 
     return (
         <Col className="mx-auto" md="4">
@@ -27,7 +31,7 @@ const Login = () => {
                             <Button
                                 className="btn-round btn-block"
                                 color="primary"
-                                type="submit"
+                                onClick={redirecionar}
                             >
                                 Login
                             </Button>
