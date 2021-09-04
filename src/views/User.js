@@ -111,10 +111,18 @@ function User() {
                           type="date"
                         />
                       </FormGroup>
+                      <FormGroup>
+                        <label>Telefone</label>
+                        <Input
+                          defaultValue=""
+                          placeholder="Telefone"
+                          type="text"
+                        />
+                      </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="4">
+                    <Col>
                       <FormGroup>
                         <label>CEP</label>
                         <Input
@@ -124,54 +132,12 @@ function User() {
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="4">
-                      <FormGroup>
-                        <label>Cidade</label>
-                          <Input
-                            defaultValue="Salvador"
-                            placeholder="Cidade"
-                            type="text"
-                          />
-                      </FormGroup>
-                    </Col>
                     <Col className="pl-1" md="4">
                       <FormGroup>
-                        <label>Nome do bairro</label>
+                        <label>Endereço</label>
                         <Input
                           defaultValue=""
-                          placeholder="Bairro"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                  <Col className="pr-1" md="4">
-                      <FormGroup>
-                        <label>Nome da rua</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="Rua"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col md="2">
-                      <FormGroup>
-                        <label>Numero</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="Numero"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col md="6">
-                      <FormGroup>
-                        <label>Complemento</label>
-                        <Input
-                          defaultValue=""
-                          placeholder="Complemento"
+                          placeholder="Endereço"
                           type="text"
                         />
                       </FormGroup>

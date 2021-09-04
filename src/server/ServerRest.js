@@ -1,8 +1,8 @@
-import http from "../server/ServerRest"
+import http from "../http-rest"
 
 //Lista todas as publicações
 const getAllPublicacoes = () => {
-    return http.get("/publicacoes");
+    return http.get("publicacoes");
 };
 
 //Procurar Publicação pelo id
