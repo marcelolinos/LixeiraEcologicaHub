@@ -220,3 +220,7 @@
   width: 700px;
   margin: auto;
 }
+
+#pos-img{
+  display: inline;
+}
