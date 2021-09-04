@@ -12,16 +12,16 @@ const getPublicacao = id => {
 
 //Criar Publicação
 const createPublicacao = data => {
-    return http.post("/publicacao", data);
+    return http.post("/publicacoes", data);
 };
 
 //Atualizar Publicação
 const updatePublicacao = (id, data) => {
-    return http.put(`/publicacao/${id}`, data);
+    return http.put(`/publicacoes/${id}`, data);
 };
 //Remover Publicação
 const removePublicacao = id => {
-    return http.delete(`/publicacao/${id}`);
+    return http.delete(`/publicacoes/${id}`);
 };
 
 //Lista todos os Usuarios
