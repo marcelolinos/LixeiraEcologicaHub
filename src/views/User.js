@@ -74,20 +74,20 @@ function User() {
                 <Row>
                     <Col className="pr-1" md="6">
                       <FormGroup>
-                        <label>First Name</label>
+                        <label>Nome</label>
                         <Input
-                          defaultValue="Chet"
-                          placeholder="Company"
+                          defaultValue=""
+                          placeholder="Sobrenome"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="6">
                       <FormGroup>
-                        <label>Last Name</label>
+                        <label>Sobrenome</label>
                         <Input
-                          defaultValue="Faker"
-                          placeholder="Last Name"
+                          defaultValue=""
+                          placeholder="Sobrenome"
                           type="text"
                         />
                       </FormGroup>
@@ -97,7 +97,7 @@ function User() {
                     <Col className="pr-1" md="6">
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">
-                          Email address
+                          Endereço de Email
                         </label>
                         <Input placeholder="Email" type="email" />
                       </FormGroup>

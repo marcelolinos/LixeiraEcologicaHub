@@ -26,6 +26,7 @@ import UserPage from "views/User.js";
 import Publish from "views/Publish";
 import Published from "views/Published";
 import CadastroUsuario from "views/CadastroUsuario";
+import EditaPublicacao from "views/EditaPublicacao";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -103,6 +104,13 @@ var routes = [
     icon: "",
     component: Published,
     layout: "/admin"
-  }
+  },
+  {
+    path: "/material/:id",
+    name: "Material",
+    icon: "nc-icon nc-tile-56",
+    component: EditaPublicacao,
+    layout: "/admin",
+  },
 ];
 export default routes;
