@@ -27,6 +27,9 @@ import Publish from "views/Publish";
 import Published from "views/Published";
 import CadastroUsuario from "views/CadastroUsuario";
 import EditaPublicacao from "views/EditaPublicacao";
+import CreatePublish from "views/CreatePublish";
+import Login from "views/Login"
+import { name } from "commander";
 //import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
@@ -82,8 +85,8 @@ var routes = [
   {
     path: "/login",
     name: "Sair",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
+    icon: "nc-icon nc-user-run",
+    component: Login,
     layout: "/login",
     },
    {
@@ -101,7 +104,7 @@ var routes = [
   {
     path: "/published/:id",
     name: "Publicação",
-    icon: "",
+    icon: null,
     component: Published,
     layout: "/admin"
   },
@@ -111,6 +114,12 @@ var routes = [
     icon: "nc-icon nc-tile-56",
     component: EditaPublicacao,
     layout: "/admin",
+  },{
+    path: "/create-publish",
+    name: "Criar Publicação",
+    icon: "nc-icon nc-tile-56",
+    component: CreatePublish,
+    layout: "/admin"
   },
 ];
 export default routes;
