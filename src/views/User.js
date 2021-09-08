@@ -95,15 +95,14 @@ function User() {
       <div className="content">
         <Row>
           <Col md="12">
-            <Card className="">
+            <Card className="avatar-card">
               <CardBody>
                 <Row xs="2">
                   <Col xl="2" md="3" sm="4" className="px-3">
                     <img
                       alt="..."
-                      className="avatar border-gray"
+                      className="avatar-img"
                       src={require("assets/img/mike.jpg").default}
-                      id="avatar-img"
                     />
                   </Col>
                   <Col xl="9" md="9" sm="8" className="text-left">
