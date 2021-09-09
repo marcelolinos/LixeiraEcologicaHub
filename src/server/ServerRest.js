@@ -12,7 +12,7 @@ const getPublicacao = id => {
 
 //Criar Publicação
 const createPublicacao = data => {
-    return http.post("/publicacoes", data);
+    return http.post("/publicacoes/criar", data);
 };
 
 //Atualizar Publicação
@@ -47,6 +47,17 @@ const updateUsuarios = (id, data) => {
 const removeUsuarios = id => {
     return http.delete(`/usuarios/${id}`);
 };
+//Lista todos os tipos de lixos
+const getAllLixos = () => {
+    return http.get("/tipo");
+};
+
+//Procurar tipo de lixo pelo id
+const getLixo = id => {
+    return http.get(`/tipo/${id}`);
+};
+
+
 
   
 export default {
@@ -60,4 +71,6 @@ export default {
     createUsuarios,
     updateUsuarios,
     removeUsuarios,
+    getLixo,
+    getAllLixos
 };

@@ -10,10 +10,40 @@ import {
     Row,
     Col,
     Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    Table
 } from "reactstrap";
 import '../assets/css/published.css'
 
 function Published(props){
+    const cors = [
+        {
+            name: "plastico",
+            cor: "#EC7063"
+        },
+        {
+            name: "bateria",
+            cor: "#283747"
+        },
+        {
+            name: "eletronico",
+            cor: "#AB763A"
+        },
+        {
+            name: "vidro",
+            cor: "#7FB3D5"
+        },
+        {
+            name: "metal",
+            cor: "#BB8FCE"
+        },
+        {
+            name: "papel",
+            cor: "#F7DC6F"
+        },
+    ]
     const add = {
         idmaterial_publicado: null,
         titulo: '',
@@ -31,6 +61,8 @@ function Published(props){
         Get(props.match.params.id)
     }, [props.match.params.id])
 
+    
+    console.log(localStorage)
 
     const Get = id => {
         Data.getPublicacao(id)
@@ -41,21 +73,21 @@ function Published(props){
                 console.log(e)
             })
     }
-const List = [
-    {
-        id: 1,
-        title: "Placa mãe",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyuKmbqfzAi9jxFqCNUjDakA-1qc-x07A61o-iAEfqfmGrUwqQ4qq4MrOQAI-9hfuTsu--iTA&usqp=CAc",
-        description: "Placa mãe da asus 2009, com componente queimado",
-        value: 130.55,
-        cor: "#AB763A",
-        usuario:[
-            {
-                nome: "Felipe P"
+    const verificarCor = (corApi, cor) =>{
+        for(var i = 0; i < cor.length; i++){
+            if(corApi == cor[i].name){
+                return cor[i].cor
             }
-        ]
+        }
     }
-]
+    const [modal, setModal] = useState(false)
+    const toggle = () =>{
+        setModal(!modal)
+    }
+    const interesse = () =>{
+        
+    }
+
     return(
         <>
             <div className="content">
@@ -69,7 +101,7 @@ const List = [
                                 <CardBody>
                                     <h2>
                                         {publicacao.titulo}
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={List[0].cor} fill="currentColor" class="bi bi-tags-fill" style={{marginLeft: 10}} viewBox="0 0 16 14">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={verificarCor(publicacao.material.titulo_material, cors)} fill="currentColor" class="bi bi-tags-fill" style={{marginLeft: 10}} viewBox="0 0 16 14">
                                             <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
                                             <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
                                         </svg>                                          
@@ -83,11 +115,38 @@ const List = [
                             <CardFooter>
                                 <hr/>
                                 <p>Publicado por: {publicacao.usuario.nome}</p>
-                                <Button color="success">Entrar em contato</Button>
+                                {
+                                    JSON.parse(localStorage.getItem('dados')).nome != publicacao.usuario.nome ? (
+                                        <Button onClick={interesse} color="success">Tenho Interesse</Button>
+                                    ) : (
+                                        <Button onClick={toggle} color="warning">Lista de Interessados</Button>
+                                    )
+                                }
                             </CardFooter>                               
                         </Card> 
                     </Col>
                 </Row>
+                <Modal isOpen={modal} toggle={toggle} >
+                    <ModalHeader>Lista de Interessados</ModalHeader>
+                    <ModalBody >
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><Button color="success">Aceitar</Button></td>
+                                    <td><Button color="danger">Negar</Button></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </ModalBody>
+                </Modal>
             </div>
         </> 
     )
