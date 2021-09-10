@@ -21,7 +21,7 @@ const updatePublicacao = (id, data) => {
 };
 //Remover Publicação
 const removePublicacao = id => {
-    return http.delete(`/publicacoes/${id}`);
+    return http.delete(`/publicacoes/delete/${id}`);
 };
 
 //Lista todos os Usuarios

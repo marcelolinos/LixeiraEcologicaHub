@@ -33,7 +33,11 @@ import {
   Col,
 } from "reactstrap";
 
+import ServerRest from "server/ServerRest";
+
 function User() {
+
+  var nada = 0
 
   const[usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('dados')))
 
@@ -65,6 +69,8 @@ function User() {
 ]
 
   const listaPublicacoes = usuario.publicacoes.map((publicacao)=>{
+    nada += 1
+    console.log(nada)
     const material = {
       id: publicacao.idmaterial_publicado,
       imgURL: publicacao.imgURL,
@@ -75,6 +81,27 @@ function User() {
     }
     return material
   })
+
+  const removerPublicacao = (id)=>{
+
+    if(window.confirm("Deseja realmente apagar a publicação?")){
+      ServerRest.removePublicacao(id)
+        .then(response =>{
+          ServerRest.getUsuarios(usuario.idusuario)
+            .then(response =>{ setUsuario(response.data) })
+            .catch(e =>{console.log("Erro ao obter usuario.");})
+          window.alert("Exclusão bem sucedida.")
+          localStorage.setItem("dados", JSON.stringify(usuario))
+        })
+        .catch(e =>{
+          console.log(e);
+          window.alert("Erro ao excluir a publicacao")
+        })
+    }else{
+    }
+  }
+
+  
 
   console.log(usuario);
 
@@ -119,14 +146,19 @@ function User() {
                     </Col>
                     <Col sm="5" md="5" xs="5">
                       <p className="title">{item.titulo}</p>
-                      <button className="badge badge-pill badge-info position-absolute fixed-bottom mb-3 ml-3">Atualizar</button>
+                      <button className="badge badge-pill badge-info 
+                      position-absolute 
+                      fixed-bottom mb-3 ml-3">Atualizar</button>
                     </Col>
                     <Col sm="3" md="3" lg="3" className="col-2">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={item.color[0].cor} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                         <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
                       </svg>
-                      <button className="badge badge-pill badge-danger position-absolute fixed-bottom mb-3">Deletar</button>
+                      <button className="badge badge-pill badge-danger 
+                      position-absolute 
+                      fixed-bottom mb-3"
+                      onClick={()=>{removerPublicacao(item.id)}}>Deletar</button>
                     </Col>
                   </Row>
                 </CardBody>
