@@ -11,7 +11,7 @@ const Login = (props) => {
     const [logado, setLogado] = useState(false)
 
     const redirecionar = (e) => {
-        props.history.push('/admin/dashboard')
+        props.history.push('/admin/publish')
     }
 
     const input = event => {
@@ -66,7 +66,7 @@ const Login = (props) => {
                             </label>
                             <Input placeholder="Password" type="password" name="password"  id="password"  onChange={input} />
                         </div>
-                        <div className="w-50 mx-auto my-5">
+                        <div className="w-50 mx-auto my-4">
                             <Button
                                 className="btn-round btn-block"
                                 color="primary"

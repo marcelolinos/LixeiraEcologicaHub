@@ -57,6 +57,16 @@ const getLixo = id => {
     return http.get(`/tipo/${id}`);
 };
 
+//Procurar Interessados da publicação 
+const getInteressado = id => {
+    return http.get(`/interessados/${id}`)
+}
+
+//Postar Interesse na publicação
+const createInteressado = dados =>{
+    return http.post(`/interessados/criar/`, dados)
+}
+
 
 
   
@@ -72,5 +82,8 @@ export default {
     updateUsuarios,
     removeUsuarios,
     getLixo,
-    getAllLixos
+    getAllLixos,
+    getInteressado,
+    createInteressado
+
 };
