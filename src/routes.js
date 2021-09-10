@@ -36,7 +36,7 @@ var routes = [
   {
     path: "/dashboard",
     name: "Painel",
-    icon: "nc-icon nc-bank",
+    icon: null,
     component: Dashboard,
     layout: "/admin",
   },
@@ -46,25 +46,31 @@ var routes = [
     icon: "nc-icon nc-single-copy-04",
     component: Publish,
     layout: "/admin"
+  },{
+    path: "/create-publish",
+    name: "Criar Publicação",
+    icon: "nc-icon nc-simple-add",
+    component: CreatePublish,
+    layout: "/admin"
   },
   {
     path: "/icons",
     name: "Matérial no Portal",
-    icon: "nc-icon nc-diamond",
+    icon: null,
     component: Icons,
     layout: "/admin",
   },
   {
     path: "/maps",
     name: "Disponível na zona",
-    icon: "nc-icon nc-pin-3",
+    icon: null,
     component: Maps,
     layout: "/admin",
   },
   {
     path: "/notifications",
     name: "Notificações",
-    icon: "nc-icon nc-bell-55",
+    icon: null,
     component: Notifications,
     layout: "/admin",
   },
@@ -78,7 +84,7 @@ var routes = [
   {
     path: "/tables",
     name: "Meus matérias",
-    icon: "nc-icon nc-tile-56",
+    icon: null,
     component: TableList,
     layout: "/admin",
   },
@@ -92,7 +98,7 @@ var routes = [
    {
     path: "/typography",
     name: "Typography",
-    icon: "nc-icon nc-caps-small",
+    icon: null,
     component: Typography,
     layout: "/admin",
     },
@@ -111,15 +117,9 @@ var routes = [
   {
     path: "/material/:id",
     name: "Material",
-    icon: "nc-icon nc-tile-56",
+    icon: null,
     component: EditaPublicacao,
     layout: "/admin",
-  },{
-    path: "/create-publish",
-    name: "Criar Publicação",
-    icon: "nc-icon nc-tile-56",
-    component: CreatePublish,
-    layout: "/admin"
   },
 ];
 export default routes;

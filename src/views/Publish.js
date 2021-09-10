@@ -91,8 +91,7 @@ function Publish(){
                 <Row>
                     {
                         
-                        publish && publish.map(publi =>(
-                            
+                        publish && publish.map(publi => publi.status == 1 ?(
                             <Col lg="4" md="6" sm="6">
                                 <Card className="card-stats">
                                     <Link to={`/admin/published/${publi.idmaterial_publicado}`} style={{textDecoration: 'none'}}>
@@ -104,7 +103,6 @@ function Publish(){
                                                 <Col md="5" xs="5">
                                                     <p className="title">{publi.titulo}</p>
                                                     <p className="data">{publi.data}</p>
-
                                                 </Col>
                                                 <Col>
                                                     <svg xmlns="http://www.w3.org/2000/svg" color={verificarCor(publi.material.titulo_material, cors)} width="30" height="30" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
@@ -117,7 +115,11 @@ function Publish(){
                                     </Link> 
                                 </Card>   
                             </Col>                         
-                        ))
+                        ) : (
+                            <>
+                            </>
+                        ) 
+                        )
                     }
                 </Row>
             </div>

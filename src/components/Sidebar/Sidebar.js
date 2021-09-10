@@ -22,7 +22,7 @@ import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import logo from "logo.svg";
+import logo from "../../assets/img/logo.jpeg";
 
 var ps;
 
@@ -51,17 +51,13 @@ function Sidebar(props) {
       data-color={props.bgColor}
       data-active-color={props.activeColor}
     >
-      <div className="logo">
-        <a
-          href="https://www.creative-tim.com"
-          className="simple-text logo-mini"
-        >
-          <div className="logo-img">
-            <img src={logo} alt="react-logo" />
+      <div className="logo" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <a className="simple-text">
+          <div className="logo-img" >
+            <img src={logo} alt="react-logo" style={{objectFit: "cover", height: 50}}/>
           </div>
         </a>
         <a
-          href="https://www.creative-tim.com"
           className="simple-text logo-normal"
         >
           Lixeira Ecológica
