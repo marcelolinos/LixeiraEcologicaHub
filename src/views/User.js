@@ -87,19 +87,27 @@ function User() {
       telefone: publicacao.telefone,
       status: publicacao.status,
       material: publicacao.material,
-      data:publicacao.data
+      data:publicacao.data,
+      usuario:{idusuario:usuario.idusuario}
     }
     return material
   })
+
+  const obterUsuario = () =>{
+    ServerRest.getUsuarios(usuario.idusuario)
+            .then(response =>{
+              setUsuario(response.data)
+              localStorage.setItem("dados", JSON.stringify(response.data))
+            })
+            .catch(e =>{console.log("Erro ao obter usuario.");})
+  }
 
   const removerPublicacao = (id)=>{
 
     if(window.confirm("Deseja realmente apagar a publicação?")){
       ServerRest.removePublicacao(id)
         .then(response =>{
-          ServerRest.getUsuarios(usuario.idusuario)
-            .then(response =>{ setUsuario(response.data) })
-            .catch(e =>{console.log("Erro ao obter usuario.");})
+          obterUsuario()
           window.alert("Exclusão bem sucedida.")
           localStorage.setItem("dados", JSON.stringify(usuario))
         })
@@ -117,6 +125,19 @@ function User() {
   };
 
   const toggle = () => {setModal(!modal)};
+
+  const atualizarPublicacao = ()=>{
+    ServerRest.updatePublicacao(materialPublicado.idmaterial_publicado, materialPublicado)
+      .then(response =>{
+        obterUsuario()
+        window.alert("Material alterado com sucesso!")
+        toggle()
+      })
+      .catch(e =>{
+        window.alert("Erro ao atualizar o material.")
+        console.log(e);
+      })
+  }
 
   return (
     <>
@@ -188,21 +209,34 @@ function User() {
             <ModalBody>
               <Form>
                 <FormGroup>
-                  <Label>Título</Label>
-                  <Input type="text" value={materialPublicado.titulo} name="titulo" onChange={handleInput}/>
+                  <Label for="titulo">Título</Label>
+                  <Input type="text" value={materialPublicado.titulo} name="titulo" id="titulo" onChange={handleInput}/>
                 </FormGroup>
                 <FormGroup>
-                  <Label>Descrição</Label>
-                  <Input type="text" value={materialPublicado.descricao} name="descricao" onChange={handleInput}/>
+                  <Label for="descricao">Descrição</Label>
+                  <Input type="text" value={materialPublicado.descricao} name="descricao" id="descricao" onChange={handleInput}/>
                 </FormGroup>
                 <FormGroup>
-                  <Label>Telefone</Label>
-                  <Input type="tel" value={materialPublicado.telefone} name="telefone" onChange={handleInput}/>
+                  <Label for="telefone">Telefone</Label>
+                  <Input type="tel" value={materialPublicado.telefone} name="telefone" id="telefone" onChange={handleInput}
+                  onBlur={()=>{console.log(materialPublicado)}}/>
+                </FormGroup>                  
+                <FormGroup>
+                <Label for="exampleSelect">Status</Label>
+                  <Input type="select" name="status" id="exampleSelect" defaultValue={materialPublicado.status}
+                  onChange={handleInput}>
+                    <option value="1">Publicado</option>
+                    <option value="0">Não publicado</option>
+                  </Input>
+                </FormGroup>                  
+                <FormGroup>
+                  <Label for="data">Data</Label>
+                  <Input type="date" value={materialPublicado.data} name="data" id="data" onChange={handleInput}/>
                 </FormGroup>
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => {console.log(materialPublicado)}}>Atualizar</Button>
+              <Button color="primary" onClick={() => {atualizarPublicacao()}}>Atualizar</Button>
               <Button color="secondary" onClick={toggle}>Cancelar</Button>
             </ModalFooter>
           </Modal>

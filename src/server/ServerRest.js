@@ -17,7 +17,7 @@ const createPublicacao = data => {
 
 //Atualizar Publicação
 const updatePublicacao = (id, data) => {
-    return http.put(`/publicacoes/${id}`, data);
+    return http.put(`/publicacoes/atualizar`, data);
 };
 //Remover Publicação
 const removePublicacao = id => {
