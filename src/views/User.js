@@ -16,7 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 // reactstrap components
 import {
@@ -37,12 +37,17 @@ import {
 
 import ServerRest from "server/ServerRest";
 import "../assets/css/level.css"
+import icons from "variables/icons";
 
 function User() {
 
+  useLayoutEffect(()=>{
+    obterUsuario()
+  },[])
+
   const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('dados')))
   const [modal, setModal] = useState(false);
-  const [materialPublicado, setMaterialPublicado] = useState('')
+  const [materialPublicado, setMaterialPublicado] = useState('')  
 
   const cors = [
     { name: "plastico", cor: "#EC7063"},
@@ -167,21 +172,33 @@ function User() {
                     </Col>
                     <Col sm="5" md="5" xs="5">
                       <p className="title">{item.titulo}</p>
-                      <button className="badge badge-pill badge-info 
+                      <Button className="btn btn-success 
                       position-absolute 
-                      fixed-bottom mb-3 ml-3"
+                      fixed-bottom mb-3 ml-3
+                      text-right
+                      btn-sm"
                       onClick={()=>{toggle()
-                      setMaterialPublicado(item)}}>Atualizar</button>
+                      setMaterialPublicado(item)}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                        </svg>
+                    </Button>
                     </Col>
                     <Col sm="3" md="3" lg="3" className="col-2">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={pegarCor(item)} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                         <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
                       </svg>
-                      <button className="badge badge-pill badge-danger 
+                      <Button className="btn btn-danger 
                       position-absolute 
-                      fixed-bottom mb-3"
-                      onClick={()=>{removerPublicacao(item.idmaterial_publicado)}}>Deletar</button>
+                      fixed-bottom mb-3
+                      btn-sm"
+                      onClick={()=>{removerPublicacao(item.idmaterial_publicado)}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>
+                      </Button>
                     </Col>
                   </Row>
                 </CardBody>
