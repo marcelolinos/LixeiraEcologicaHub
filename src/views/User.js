@@ -41,32 +41,32 @@ import icons from "variables/icons";
 
 function User() {
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     obterUsuario()
-  },[])
+  }, [])
 
   const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('dados')))
   const [modal, setModal] = useState(false);
-  const [materialPublicado, setMaterialPublicado] = useState('')  
+  const [materialPublicado, setMaterialPublicado] = useState('')
 
   const cors = [
-    { name: "plastico", cor: "#EC7063"},
-    { name: "bateria", cor: "#283747"},
-    {name: "eletronico",cor: "#AB763A"},
-    {name: "vidro", cor: "#7FB3D5"},
-    {name: "metal",cor: "#BB8FCE"},
-    {name: "papel",cor: "#F7DC6F"},
-]
+    { name: "plastico", cor: "#EC7063" },
+    { name: "bateria", cor: "#283747" },
+    { name: "eletronico", cor: "#AB763A" },
+    { name: "vidro", cor: "#7FB3D5" },
+    { name: "metal", cor: "#BB8FCE" },
+    { name: "papel", cor: "#F7DC6F" },
+  ]
 
-  const pegarCor = (item) =>{
+  const pegarCor = (item) => {
     for (let index = 0; index < cors.length; index++) {
       if (cors[index].name == item.material.titulo_material) {
         return cors[index].cor
-      }      
+      }
     }
   }
 
-  const listaPublicacoes = usuario.publicacoes.map((publicacao)=>{
+  const listaPublicacoes = usuario.publicacoes.map((publicacao) => {
     const material = {
       idmaterial_publicado: publicacao.idmaterial_publicado,
       imgURL: publicacao.imgURL,
@@ -75,35 +75,35 @@ function User() {
       telefone: publicacao.telefone,
       status: publicacao.status,
       material: publicacao.material,
-      data:publicacao.data,
-      usuario:{idusuario:usuario.idusuario}
+      data: publicacao.data,
+      usuario: { idusuario: usuario.idusuario }
     }
     return material
   })
 
-  const obterUsuario = () =>{
+  const obterUsuario = () => {
     ServerRest.getUsuarios(usuario.idusuario)
-            .then(response =>{
-              setUsuario(response.data)
-              localStorage.setItem("dados", JSON.stringify(response.data))
-            })
-            .catch(e =>{console.log("Erro ao obter usuario.");})
+      .then(response => {
+        setUsuario(response.data)
+        localStorage.setItem("dados", JSON.stringify(response.data))
+      })
+      .catch(e => { console.log("Erro ao obter usuario."); })
   }
 
-  const removerPublicacao = (id)=>{
+  const removerPublicacao = (id) => {
 
-    if(window.confirm("Deseja realmente apagar a publicação?")){
+    if (window.confirm("Deseja realmente apagar a publicação?")) {
       ServerRest.removePublicacao(id)
-        .then(response =>{
+        .then(response => {
           obterUsuario()
           window.alert("Exclusão bem sucedida.")
           localStorage.setItem("dados", JSON.stringify(usuario))
         })
-        .catch(e =>{
+        .catch(e => {
           console.log(e);
           window.alert("Erro ao excluir a publicacao")
         })
-    }else{
+    } else {
     }
   }
 
@@ -112,16 +112,16 @@ function User() {
     setMaterialPublicado({ ...materialPublicado, [name]: value });
   };
 
-  const toggle = () => {setModal(!modal)};
+  const toggle = () => { setModal(!modal) };
 
-  const atualizarPublicacao = ()=>{
+  const atualizarPublicacao = () => {
     ServerRest.updatePublicacao(materialPublicado.idmaterial_publicado, materialPublicado)
-      .then(response =>{
+      .then(response => {
         obterUsuario()
         window.alert("Material alterado com sucesso!")
         toggle()
       })
-      .catch(e =>{
+      .catch(e => {
         window.alert("Erro ao atualizar o material.")
         console.log(e);
       })
@@ -150,8 +150,8 @@ function User() {
                     </p>
                     <a>Level: {usuario.level}</a>
                     <div className="level">
-                      <div className="exp" style={{width: usuario.exp}}></div>
-                    </div> 
+                      <div className="exp" style={{ width: usuario.exp }}></div>
+                    </div>
                   </Col>
                 </Row>
               </CardBody>
@@ -170,36 +170,37 @@ function User() {
                     <Col sm="4" md="4" xs="4">
                       <img className="img-public" src={item.imgURL}></img>
                     </Col>
-                    <Col sm="5" md="5" xs="5">
+                    <Col sm="5" md="5" xs="5" >
                       <p className="title">{item.titulo}</p>
-                      <Button className="btn btn-success 
-                      position-absolute 
-                      fixed-bottom mb-3 ml-3
-                      text-right
-                      btn-sm"
-                      onClick={()=>{toggle()
-                      setMaterialPublicado(item)}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                        </svg>
-                    </Button>
+                      <div className="t">
+                        <Button color="success"
+                          className="btn-sm b"
+                          onClick={() => {
+                            toggle()
+                            setMaterialPublicado(item)
+                          }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                          </svg>
+                        </Button>
+
+                        <Button color="danger"
+                          className="btn-sm b"
+                          onClick={() => { removerPublicacao(item.idmaterial_publicado) }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                          </svg>
+                        </Button>
+                      </div>
                     </Col>
-                    <Col sm="3" md="3" lg="3" className="col-2">
+                    <Col sm="3" md="3" lg="3" className="col-1">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={pegarCor(item)} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                         <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
                       </svg>
-                      <Button className="btn btn-danger 
-                      position-absolute 
-                      fixed-bottom mb-3
-                      btn-sm"
-                      onClick={()=>{removerPublicacao(item.idmaterial_publicado)}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                        </svg>
-                      </Button>
                     </Col>
+
                   </Row>
                 </CardBody>
               </Card>
@@ -214,33 +215,33 @@ function User() {
               <Form>
                 <FormGroup>
                   <Label for="titulo">Título</Label>
-                  <Input type="text" value={materialPublicado.titulo} name="titulo" id="titulo" onChange={handleInput}/>
+                  <Input type="text" value={materialPublicado.titulo} name="titulo" id="titulo" onChange={handleInput} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="descricao">Descrição</Label>
-                  <Input type="text" value={materialPublicado.descricao} name="descricao" id="descricao" onChange={handleInput}/>
+                  <Input type="text" value={materialPublicado.descricao} name="descricao" id="descricao" onChange={handleInput} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="telefone">Telefone</Label>
                   <Input type="tel" value={materialPublicado.telefone} name="telefone" id="telefone" onChange={handleInput}
-                  onBlur={()=>{console.log(materialPublicado)}}/>
-                </FormGroup>                  
+                    onBlur={() => { console.log(materialPublicado) }} />
+                </FormGroup>
                 <FormGroup>
-                <Label for="exampleSelect">Status</Label>
+                  <Label for="exampleSelect">Status</Label>
                   <Input type="select" name="status" id="exampleSelect" defaultValue={materialPublicado.status}
-                  onChange={handleInput}>
+                    onChange={handleInput}>
                     <option value="1">Publicado</option>
                     <option value="0">Não publicado</option>
                   </Input>
-                </FormGroup>                  
+                </FormGroup>
                 <FormGroup>
                   <Label for="data">Data</Label>
-                  <Input type="date" value={materialPublicado.data} name="data" id="data" onChange={handleInput}/>
+                  <Input type="date" value={materialPublicado.data} name="data" id="data" onChange={handleInput} />
                 </FormGroup>
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={() => {atualizarPublicacao()}}>Atualizar</Button>
+              <Button color="primary" onClick={() => { atualizarPublicacao() }}>Atualizar</Button>
               <Button color="secondary" onClick={toggle}>Cancelar</Button>
             </ModalFooter>
           </Modal>

@@ -228,3 +228,18 @@
 .avatar-card{
   border-top: 10px solid #E9E8E4;
 }
+
+.botao-editar{
+  height: 35px;
+  margin-right: 0px;
+}
+
+
+.b{
+  padding: 5px;
+  
+}
+.t{
+  position: absolute;
+  bottom: 10px;
+}
