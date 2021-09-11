@@ -22,24 +22,26 @@ import React, { useState } from "react";
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
+  Row,
+  Col,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
   FormGroup,
   Form,
   Input,
-  Row,
-  Col,
+  Label
 } from "reactstrap";
 
 import ServerRest from "server/ServerRest";
 
 function User() {
 
-  var nada = 0
-
-  const[usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('dados')))
+  const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('dados')))
+  const [modal, setModal] = useState(false);
+  const [materialPublicado, setMaterialPublicado] = useState('')
 
   const cors = [
     {
@@ -68,16 +70,24 @@ function User() {
     },
 ]
 
+  const pegarCor = (item) =>{
+    for (let index = 0; index < cors.length; index++) {
+      if (cors[index].name == item.material.titulo_material) {
+        return cors[index].cor
+      }      
+    }
+  }
+
   const listaPublicacoes = usuario.publicacoes.map((publicacao)=>{
-    nada += 1
-    console.log(nada)
     const material = {
-      id: publicacao.idmaterial_publicado,
+      idmaterial_publicado: publicacao.idmaterial_publicado,
       imgURL: publicacao.imgURL,
       titulo: publicacao.titulo,
-      color: cors.filter((item)=>{
-        return item.name == publicacao.material.titulo_material
-      })
+      descricao: publicacao.descricao,
+      telefone: publicacao.telefone,
+      status: publicacao.status,
+      material: publicacao.material,
+      data:publicacao.data
     }
     return material
   })
@@ -101,9 +111,12 @@ function User() {
     }
   }
 
-  
+  const handleInput = event => {
+    const { name, value } = event.target;
+    setMaterialPublicado({ ...materialPublicado, [name]: value });
+  };
 
-  console.log(usuario);
+  const toggle = () => {setModal(!modal)};
 
   return (
     <>
@@ -148,17 +161,19 @@ function User() {
                       <p className="title">{item.titulo}</p>
                       <button className="badge badge-pill badge-info 
                       position-absolute 
-                      fixed-bottom mb-3 ml-3">Atualizar</button>
+                      fixed-bottom mb-3 ml-3"
+                      onClick={()=>{toggle()
+                      setMaterialPublicado(item)}}>Atualizar</button>
                     </Col>
                     <Col sm="3" md="3" lg="3" className="col-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={item.color[0].cor} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={pegarCor(item)} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
                         <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                         <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
                       </svg>
                       <button className="badge badge-pill badge-danger 
                       position-absolute 
                       fixed-bottom mb-3"
-                      onClick={()=>{removerPublicacao(item.id)}}>Deletar</button>
+                      onClick={()=>{removerPublicacao(item.idmaterial_publicado)}}>Deletar</button>
                     </Col>
                   </Row>
                 </CardBody>
@@ -166,6 +181,32 @@ function User() {
             </Col>
           ))}
         </Row>
+        {/*------------ Modal ----------*/}
+        <div>
+          <Modal isOpen={modal} toggle={toggle}>
+            <ModalHeader toggle={toggle}>Atualizar dados</ModalHeader>
+            <ModalBody>
+              <Form>
+                <FormGroup>
+                  <Label>Título</Label>
+                  <Input type="text" value={materialPublicado.titulo} name="titulo" onChange={handleInput}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label>Descrição</Label>
+                  <Input type="text" value={materialPublicado.descricao} name="descricao" onChange={handleInput}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label>Telefone</Label>
+                  <Input type="tel" value={materialPublicado.telefone} name="telefone" onChange={handleInput}/>
+                </FormGroup>
+              </Form>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={() => {console.log(materialPublicado)}}>Atualizar</Button>
+              <Button color="secondary" onClick={toggle}>Cancelar</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
       </div>
     </>
   );
