@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Col, Button, Card } from "reactstrap"
 import Data from "../server/ServerRest"
+import NotificationAlert from "react-notification-alert";
 
 const Login = (props) => {
     const dados = {
@@ -37,7 +38,7 @@ const Login = (props) => {
                     }        
                             
                 }
-                alert("Login não encontrado")
+                notify("tc","danger","E-mail ou senha Incorreta!")
                 
             })
             .catch(e => {
@@ -45,9 +46,29 @@ const Login = (props) => {
             })
             
     }
+    //Notificação
+    const notificationAlert = React.useRef();
+    const notify = (place, color,msg) => {
+        var options = {};
+        options = {
+        place: place,
+        message: (
+            <div>
+            <div>
+                {msg}
+            </div>
+            </div>
+        ),
+        type: color,
+        icon: "nc-icon nc-bell-55",
+        autoDismiss: 5,
+    };
+    notificationAlert.current.notificationAlert(options);
+    }
     
     return (
         <Col className="mx-auto" md="4">
+            <NotificationAlert ref={notificationAlert} />
             <Card className="card-user">
                 <Form>
                     <div>

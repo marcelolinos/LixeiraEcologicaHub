@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import NotificationAlert from "react-notification-alert";
 import {
     Card,
     CardHeader,
@@ -55,7 +56,7 @@ function CreatePublish(){
             usuario: {idusuario: JSON.parse(localStorage.getItem('dados')).idusuario},
         }
         console.log(postagem)
-        
+        notify("tc","success","Matérial publicado com sucesso!")
         Data.createPublicacao(postagem)
         .then(response =>{
             setPost({
@@ -75,10 +76,28 @@ function CreatePublish(){
             }
         )
     }
-
+    const notificationAlert = React.useRef();
+    const notify = (place, color,msg) => {
+        var options = {};
+        options = {
+        place: place,
+        message: (
+            <div>
+            <div>
+                {msg}
+            </div>
+            </div>
+        ),
+        type: color,
+        icon: "nc-icon nc-bell-55",
+        autoDismiss: 5,
+    };
+    notificationAlert.current.notificationAlert(options);
+    }
     return(
         <>
             <div className="content">
+                <NotificationAlert ref={notificationAlert} />
                 <Row>
                     <Col md="10">
                         <Card>

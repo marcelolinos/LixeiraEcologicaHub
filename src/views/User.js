@@ -36,6 +36,7 @@ import {
 } from "reactstrap";
 
 import ServerRest from "server/ServerRest";
+import "../assets/css/level.css"
 
 function User() {
 
@@ -44,30 +45,12 @@ function User() {
   const [materialPublicado, setMaterialPublicado] = useState('')
 
   const cors = [
-    {
-        name: "plastico",
-        cor: "#EC7063"
-    },
-    {
-        name: "bateria",
-        cor: "#283747"
-    },
-    {
-        name: "eletronico",
-        cor: "#AB763A"
-    },
-    {
-        name: "vidro",
-        cor: "#7FB3D5"
-    },
-    {
-        name: "metal",
-        cor: "#BB8FCE"
-    },
-    {
-        name: "papel",
-        cor: "#F7DC6F"
-    },
+    { name: "plastico", cor: "#EC7063"},
+    { name: "bateria", cor: "#283747"},
+    {name: "eletronico",cor: "#AB763A"},
+    {name: "vidro", cor: "#7FB3D5"},
+    {name: "metal",cor: "#BB8FCE"},
+    {name: "papel",cor: "#F7DC6F"},
 ]
 
   const pegarCor = (item) =>{
@@ -159,7 +142,11 @@ function User() {
                     <p>{usuario.email}</p>
                     <p className="description">
                       {usuario.endereco}
-                </p>
+                    </p>
+                    <a>Level: {usuario.level}</a>
+                    <div className="level">
+                      <div className="exp" style={{width: usuario.exp}}></div>
+                    </div> 
                   </Col>
                 </Row>
               </CardBody>

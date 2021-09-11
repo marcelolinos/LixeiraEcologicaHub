@@ -50,11 +50,12 @@ function Published(props){
     const [modal, setModal] = useState(false)
     const [submit, setSubmit] = useState(false)
     const [post, setPost] = useState(add)
-    
+    const [verific, setVerific] = useState(false)
+   
+    //Verificar qual id
     useEffect(() => {
         Get(props.match.params.id)
         getAllInteressados(props.match.params.id)
-        
     }, [props.match.params.id], [props.match.params.id])
 
 
@@ -100,16 +101,28 @@ function Published(props){
                     break                   
                 }
             }            
+        }     
+    }
+    //Escolher um usuario da lista de interessados
+    const verificarEscolhido = (props) =>{
+        if(list.filter(l => l.id_usuario_contemplado)){
+            setVerific(true)
+            notify("tc","danger","Você já escolheu o interessado!")
+        }else{
+            console.log("criou")
         }
-
+        
+        
+        
+    
         
     }
     const Escolher = (props) =>{
         const dados = {
-            id: list[0].id,
-            idmaterial_publicado: list[0].idmaterial_publicado,
-            id_usuario_contemplado: props.idusuario,
-            usuario: {idusuario: props.idusuario}
+            id: props.id,
+            idmaterial_publicado: props.idmaterial_publicado,
+            id_usuario_contemplado: props.usuario.idusuario,
+            usuario: {idusuario: props.usuario.idusuario}
             
         }        
         console.log(dados)
@@ -126,7 +139,7 @@ function Published(props){
             console.log(e)
         })
     }
-
+    //Entrar na lista de interesses ----------------------------------------------------------------------------
     const create = () =>{
         const dados = {
             idmaterial_publicado: publicacao.idmaterial_publicado,
@@ -159,6 +172,7 @@ function Published(props){
         })
     }
     
+    //Notificação--------------------------------------------------------------
     const notificationAlert = React.useRef();
     const notify = (place, color,msg) => {
         var options = {};
@@ -177,6 +191,17 @@ function Published(props){
     };
     notificationAlert.current.notificationAlert(options);
 };
+
+    //Descartar matérial pós entrega do matérial(Só consegue descartá pós escolher o interessado)-----------------------
+    const descartar = () =>{
+        if(list.filter(l => l.id_usuario_contemplado)){
+            Upar()
+            save()
+        }else{
+            notify("tc","danger","Você não escolheu o interessado!")
+        }
+    }
+    //Atualizar o status da publicação pós entrega----------------------------------------------------------------------
     const save = () =>{
         var postagem = {
             idmaterial_publicado: publicacao.idmaterial_publicado,
@@ -207,12 +232,147 @@ function Published(props){
             console.log(e)
         })
         notify("tc","warning","Parabéns por descartar o matérial!")
-        setTimeout(function(){
-            window.location.reload(1);
-        }, 3000);
+    }
+    //Atualizar EXP E LEVEL ------------------------------------------------------------
+    var upUser = {
+        idusuario: 0,
+        nome: '',
+        exp: exp,
+        level: 0,
+        email: '',
+        cep: '',
+        endereco: '',
+        telefone: '',
+        data_nascimento: '',
+        senha: 0,
+      }
+    const [updateUser, setUpdateUser] = useState(upUser)
+    const [exp, setExp] = useState(JSON.parse(localStorage.getItem('dados')).exp)
+    const [level, setLevel] = useState(JSON.parse(localStorage.getItem('dados')).level) 
+    //Ganhou de Exp pós entrega tanto do usuario publicado e do interessado
+    const UpdateUser = () =>{
+        var user = {
+          idusuario: JSON.parse(localStorage.getItem('dados')).idusuario,
+          nome: JSON.parse(localStorage.getItem('dados')).nome,
+          exp: exp >= 99 ? 0 : exp + 25,
+          level: exp >= 99 ? level + 1 : level,
+          email: JSON.parse(localStorage.getItem('dados')).email,
+          cep: JSON.parse(localStorage.getItem('dados')).cep,
+          endereco: JSON.parse(localStorage.getItem('dados')).endereco,
+          telefone: JSON.parse(localStorage.getItem('dados')).telefone,
+          data_nascimento: JSON.parse(localStorage.getItem('dados')).data_nascimento,
+          senha: JSON.parse(localStorage.getItem('dados')).senha,
+        }
+        console.log(user)
+        Data.createUsuarios(user)
+        .then(response => {
+            setUpdateUser({
+                idusuario: JSON.parse(localStorage.getItem('dados')).idusuario,
+                nome: JSON.parse(localStorage.getItem('dados')).nome,
+                exp: exp,
+                level: level,
+                email: JSON.parse(localStorage.getItem('dados')).email,
+                cep: JSON.parse(localStorage.getItem('dados')).cep,
+                endereco: JSON.parse(localStorage.getItem('dados')).endereco,
+                telefone: JSON.parse(localStorage.getItem('dados')).telefone,
+                data_nascimento: JSON.parse(localStorage.getItem('dados')).data_nascimento,
+                senha: JSON.parse(localStorage.getItem('dados')).senha,
+            })
+            UparInteressado()
+            getUser()
+            notify("tc","success","Parabéns! Você ganhou 25 Exp!")
+            setTimeout(function(){
+                window.location.reload(1);
+            }, 4000);
+            console.log("Upo")
+        })
+        .catch(e=>{
+            console.log(e)
+        })
+        
+    }
+    //Faz com que pós descartar o matérial o usuario ganhe Exp
+    const Upar = () =>{
+        setExp(exp + 25)
+        
+        if(exp >= 100){
+          setLevel(level + 1)
+          UpdateUser()
+        }else{
+            UpdateUser()
+
+        }
+        
+    }
+    //Atualiza dados(exp e level) no localStorage pós ganhar exp e level
+    const getUser = () => {
+        console.log("entrou")
+        var usuario ={
+            name: JSON.parse(localStorage.getItem('dados')).email,
+            senha: JSON.parse(localStorage.getItem('dados')).senha
+        }
+        localStorage.clear()
+        Data.getAllUsuarios()
+            .then(response => {
+                for(var i = 0; i < response.data.length; i++){
+                    if(response.data[i].email === usuario.name && response.data[i].senha === usuario.senha){
+                        localStorage.setItem("dados", JSON.stringify(response.data[i]))
+                        console.log(JSON.parse(localStorage.getItem('dados')))
+                    }        
+                            
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            })
+            
+    }
+    //Enviar exp para o interessado
+    const UparInteressado = () =>{
+        if(list.filter(l => l.id_usuario_contemplado)){
+            Interessado(list.filter(l => l.id_usuario_contemplado)[0])
+        }else{
+            alert("erro")
+        }
     }
 
-    console.log(list)
+    const Interessado = (props) =>{
+        console.log(props)
+        var userInte = {
+            idusuario: props.usuario.idusuario,
+            nome: props.usuario.nome,
+            exp: props.usuario.exp >= 99 ? 0 : exp + 25,
+            level: props.usuario.exp >= 99 ? props.usuario.level + 1 : props.usuario.level,
+            email: props.usuario.email,
+            cep: props.usuario.cep,
+            endereco: props.usuario.endereco,
+            telefone: props.usuario.telefone,
+            data_nascimento: props.usuario.data_nascimento,
+            senha: props.usuario.senha,
+          }
+          console.log(userInte)
+          Data.createUsuarios(userInte)
+          .then(response => {
+              setUpdateUser({
+                idusuario: response.userInte.idusuario,
+                nome: response.userInte.nome,
+                exp: response.userInte.exp,
+                level: response.userInte.level,
+                email: response.userInte.email,
+                cep: response.userInte.cep,
+                endereco: response.userInte.endereco,
+                telefone: response.userInte.telefone,
+                data_nascimento: response.userInte.data_nascimento,
+                senha: response.userInte.senha,
+              })
+              console.log("A pessoa ganhou xp")
+          })
+          .catch(e=>{
+              console.log(e)
+          })
+             
+    }
+
     return(
         <>
             <div className="content">
@@ -243,8 +403,7 @@ function Published(props){
                                 <p>Publicado por: {publicacao.usuario.nome}</p>
                                 {
                                     JSON.parse(localStorage.getItem('dados')).nome != publicacao.usuario.nome ? (
-                                        <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button>
-                                        
+                                        <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button> 
                                     ) : (
                                         <div>
                                         {
@@ -252,24 +411,19 @@ function Published(props){
                                                 <div>
                                                     <Button id="bt"  onClick={toggle} color="warning">Lista de Interessados</Button>
                                                     {
-                                                        list.length-1 >= 0 ? (
-                                                            <Button id="bt" onClick={save} color="success">Matérial Descartado</Button>
+                                                        list.length-1 >= 0 ?(
+                                                            <Button id="bt" onClick={descartar} color="success">Matérial Descartado</Button>
+                                                        
                                                         ):(
-                                                            <>
-                                                            </>
+                                                            <></>
                                                         )
-                                                    }
-                                                    
+                                                    } 
                                                 </div>                                                
                                             ) : (
-                                                <>
-                                                </>
+                                                <></>
                                             )
-                                            
                                         }
                                         </div>
-
-
                                     )
                                 }
                             </CardFooter>                               
@@ -288,11 +442,21 @@ function Published(props){
                             </thead>
                             <tbody>
                                 {
-                                    list && list.map(item =>(
+                                    list && list.map(item => (
                                         <tr>
                                             <td>{item.usuario.nome}</td>
-                                            <td>?</td>
-                                            <td><Button onClick={() => Escolher(item.usuario)} color="success">Aceitar</Button></td>                                            
+                                            <td>{item.usuario.level}</td>
+                                            {
+                                                item.id_usuario_contemplado === null ? (
+                                                    <td><Button onClick={() => verificarEscolhido(item)} disabled={verific} color="success">Aceitar</Button></td> 
+                                                ) : (
+                                                    <>
+                                                        <td>Escolhido</td>
+                                                    </>
+
+                                                )
+                                            }
+                                                                                      
                                         </tr>
                                     ))
                                 }

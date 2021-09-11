@@ -36,12 +36,12 @@ const getUsuarios = id => {
 
 //Criar Usuario
 const createUsuarios = data => {
-    return http.post("/usuarios", data);
+    return http.post("/usuarios/criar", data);
 };
 
 //Atualizar Usuario
 const updateUsuarios = (id, data) => {
-    return http.put(`/usuarios/${id}`, data);
+    return http.put(`/usuarios/atualizar/${id}`, data);
 };
 //Remover Usuario
 const removeUsuarios = id => {
@@ -68,8 +68,6 @@ const createInteressado = dados =>{
 }
 
 
-
-  
 export default {
     getAllPublicacoes,
     getPublicacao,
