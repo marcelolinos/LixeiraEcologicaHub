@@ -20,12 +20,12 @@ import NotificationAlert from "react-notification-alert";
 
 function Published(props){
     const cors = [
-        { name: "plastico", cor: "#EC7063"},
-        { name: "bateria", cor: "#283747"},
-        {name: "eletronico",cor: "#AB763A"},
-        {name: "vidro", cor: "#7FB3D5"},
-        {name: "metal",cor: "#BB8FCE"},
-        {name: "papel",cor: "#F7DC6F"},
+        { id: 1 , name: "plastico", cor: "#EC7063" },
+        { id: 2 , name: "bateria", cor: "#283747" },
+        { id: 3 ,name: "eletronico", cor: "#AB763A" },
+        { id: 4 ,name: "vidro", cor: "#7FB3D5" },
+        { id: 5 ,name: "metal", cor: "#BB8FCE" },
+        { id: 6 ,name: "papel", cor: "#F7DC6F" },
     ]
     const add = {
         idmaterial_publicado: null,

@@ -29,6 +29,7 @@ import CadastroUsuario from "views/CadastroUsuario";
 import EditaPublicacao from "views/EditaPublicacao";
 import CreatePublish from "views/CreatePublish";
 import Login from "views/Login"
+import FilterPublish from "views/FilterPublish"
 import { name } from "commander";
 //import UpgradeToPro from "views/Upgrade.js";
 
@@ -119,6 +120,13 @@ var routes = [
     name: "Material",
     icon: null,
     component: EditaPublicacao,
+    layout: "/admin",
+  },
+  {
+    path: "/filter/:id",
+    name: "Publicações f",
+    icon: null,
+    component: FilterPublish,
     layout: "/admin",
   },
 ];

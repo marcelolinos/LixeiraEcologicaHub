@@ -21,24 +21,32 @@ const cors = [
     { id: 5 ,name: "metal", cor: "#BB8FCE" },
     { id: 6 ,name: "papel", cor: "#F7DC6F" },
 ]
-function Publish(){
+
+function FilterPublish(props){
+    console.log(props.match.params.id)
+    const add = {
+        idtipo_material: null,
+        titulo_material: '',
+        publicacoes:[]
+
+    }
     const [publish, setPublish] = useState()
     const [cor, setCor] = useState(cors)
     
     useEffect(() =>{
         retrieve()
-    }, [])
+    },[])
 
     const retrieve = () =>{
         Data.getAllPublicacoes()
         .then(response =>{
             setPublish(response.data)
-            console.log(publish)
         })
         .catch(e =>{
             console.log(e)
         })
     }
+
     const verificarCor = (corApi, cor) =>{
         for(var i = 0; i < cor.length; i++){
             if(corApi == cor[i].name){
@@ -46,6 +54,7 @@ function Publish(){
             }
         }
     }
+
     return(
         <>
             <div className="content">
@@ -56,14 +65,14 @@ function Publish(){
                                 {
                                     cor && cor.map(c =>(
                                         <Link to={`/admin/filter/${c.id}`} style={{textDecoration: 'none', color: 'black'}} >
-                                        <CardHeader>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" color={c.cor} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
-                                                <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                                                <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
-                                            </svg>  
-                                            <p>{c.name}</p> 
-                                        </CardHeader>  
-                                        </Link>                                     
+                                            <CardHeader>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" color={c.cor} fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                                                    <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                                    <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                                                </svg>  
+                                                <p>{c.name}</p> 
+                                            </CardHeader>    
+                                        </Link>                                   
                                     ))
                                 }
 
@@ -73,9 +82,8 @@ function Publish(){
 
                     </Row>
                 <Row>
-                    {
-                        
-                        publish && publish.map(publi => publi.status == 1 ?(
+                   {
+                        publish && publish.map(publi => publi.status ==  1 && publi.material.idtipo_material == props.match.params.id ?(
                             <Col lg="4" md="6" sm="6">
                                 <Card className="card-stats">
                                     <Link to={`/admin/published/${publi.idmaterial_publicado}`} style={{textDecoration: 'none'}}>
@@ -104,11 +112,11 @@ function Publish(){
                             </>
                         ) 
                         )
-                    }
+                   }  
                 </Row>
             </div>
         </>
     )
 }
 
-export default Publish
+export default FilterPublish
