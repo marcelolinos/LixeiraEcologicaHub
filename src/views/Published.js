@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 import '../assets/css/published.css'
 import NotificationAlert from "react-notification-alert";
+import Loading from 'variables/Loading';
 
 function Published(props){
     const cors = [
@@ -86,30 +87,27 @@ function Published(props){
     }
     //Função para entrar na lista de interessados do matérial
     const Interesse = () =>{
-        if(list[0] == undefined){
+        if(list.filter(l => l.usuario.idusuario).length > 0){
+            
+        }
+        if (list.filter(l => l.usuario.idusuario == JSON.parse(localStorage.getItem('dados')).idusuario).length > 0){
+            notify("tc", "danger", "Você já está na lista de interessados!")
+            setSubmit(true)
+            console.log("Não criou")
+        } else {
+            console.log("Criou")
             create()
-        }else{
-            for(var i = 0; list.length >= i; i++){
-                if(list[i].usuario.idusuario === JSON.parse(localStorage.getItem('dados')).idusuario) {
-                    notify("tc","danger","Você já está na lista de interessados!")
-                    setSubmit(true) 
-                    console.log("Não criou")
-                    break
-                }else{
-                    console.log("Criou")
-                    create()          
-                    break                   
-                }
-            }            
-        }     
+        }
     }
+
     //Escolher um usuario da lista de interessados
     const verificarEscolhido = (props) =>{
-        if(list.filter(l => l.id_usuario_contemplado)){
+        if(list.filter(l => l.id_usuario_contemplado).length == 0){
+            console.log("criou")
+            Escolher(props)
+        }else{
             setVerific(true)
             notify("tc","danger","Você já escolheu o interessado!")
-        }else{
-            console.log("criou")
         }
         
         
@@ -125,7 +123,7 @@ function Published(props){
             usuario: {idusuario: props.usuario.idusuario}
             
         }        
-        console.log(dados)
+        
         Data.createInteressado(dados)
         .then(response =>{
             setInte({
@@ -138,6 +136,10 @@ function Published(props){
         .catch(e=>{
             console.log(e)
         })
+        notify("tc","success","Interessado escolhido!")
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 2000);
     }
     //Entrar na lista de interesses ----------------------------------------------------------------------------
     const create = () =>{
@@ -194,7 +196,7 @@ function Published(props){
 
     //Descartar matérial pós entrega do matérial(Só consegue descartá pós escolher o interessado)-----------------------
     const descartar = () =>{
-        if(list.filter(l => l.id_usuario_contemplado)){
+        if(list.filter(l => l.id_usuario_contemplado).length > 0){
             Upar()
             save()
         }else{
@@ -372,62 +374,70 @@ function Published(props){
           })
              
     }
-
+    console.log(list.length)
     return(
         <>
             <div className="content">
                 <Row>
                     <NotificationAlert ref={notificationAlert} />
-                    <Col md="12">
-                        <Card>
-                            <Row className="img"> 
-                                <CardHeader>
-                                    <img className="imgp" src={publicacao.imgURL}></img>
-                                </CardHeader> 
-                                <CardBody>
-                                    <h2>
-                                        {publicacao.titulo}
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={verificarCor(publicacao.material.titulo_material, cors)} fill="currentColor" class="bi bi-tags-fill" style={{marginLeft: 10}} viewBox="0 0 16 14">
-                                            <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                                            <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
-                                        </svg>                                          
-                                    </h2>
-                                    <p className="descrip">Publicado: {publicacao.data}</p>
-                                    <h5 >Descrição</h5>
-                                    <p className="descrip">{publicacao.descricao}</p>
-                                    <p>Status: {publicacao.status == 1 ? "Disponível" : "Produto Descartado"}</p>
-                                </CardBody>
-                            </Row>
-                            <CardFooter>
-                                <hr/>
-                                <p>Publicado por: {publicacao.usuario.nome}</p>
-                                {
-                                    JSON.parse(localStorage.getItem('dados')).nome != publicacao.usuario.nome ? (
-                                        <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button> 
-                                    ) : (
-                                        <div>
+                            <Col md="12">
+                                <Card>                    
+                    {
+                        publicacao.imgURL ? (
+                                <>
+                                    <Row className="img"> 
+                                        <CardHeader>
+                                            <img className="imgp" src={publicacao.imgURL}></img>
+                                        </CardHeader> 
+                                        <CardBody>
+                                            <h2>
+                                                {publicacao.titulo}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" color={verificarCor(publicacao.material.titulo_material, cors)} fill="currentColor" class="bi bi-tags-fill" style={{marginLeft: 10}} viewBox="0 0 16 14">
+                                                    <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                                    <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>
+                                                </svg>                                          
+                                            </h2>
+                                            <p className="descrip">Publicado: {publicacao.data}</p>
+                                            <h5 >Descrição</h5>
+                                            <p className="descrip">{publicacao.descricao}</p>
+                                            <p>Status: {publicacao.status == 1 ? "Disponível" : "Produto Descartado"}</p>
+                                        </CardBody>
+                                    </Row>
+                                    <CardFooter>
+                                        <hr/>
+                                        <p>Publicado por: {publicacao.usuario.nome}</p>
                                         {
-                                            publicacao.status == 1 ?(
-                                                <div>
-                                                    <Button id="bt"  onClick={toggle} color="warning">Lista de Interessados</Button>
-                                                    {
-                                                        list.length-1 >= 0 ?(
-                                                            <Button id="bt" onClick={descartar} color="success">Matérial Descartado</Button>
-                                                        
-                                                        ):(
-                                                            <></>
-                                                        )
-                                                    } 
-                                                </div>                                                
+                                            JSON.parse(localStorage.getItem('dados')).nome != publicacao.usuario.nome ? (
+                                                <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button> 
                                             ) : (
-                                                <></>
+                                                <div>
+                                                {
+                                                    publicacao.status == 1 ?(
+                                                        <div>
+                                                            <Button id="bt"  onClick={toggle} color="warning">Lista de Interessados</Button>
+                                                            {
+                                                                list.length > 0 ?(
+                                                                    <Button id="bt" onClick={descartar} color="success">Matérial Descartado</Button>
+                                                                
+                                                                ):(
+                                                                    <></>
+                                                                )
+                                                            } 
+                                                        </div>                                                
+                                                    ) : (
+                                                        <></>
+                                                    )
+                                                }
+                                                </div>
                                             )
                                         }
-                                        </div>
-                                    )
-                                }
-                            </CardFooter>                               
-                        </Card> 
+                                    </CardFooter>  
+                                </>                             
+                        ) : (
+                            <Loading/>
+                        )
+                    }        
+                        </Card>             
                     </Col>
                 </Row>
                 <Modal isOpen={modal} toggle={toggle} >
