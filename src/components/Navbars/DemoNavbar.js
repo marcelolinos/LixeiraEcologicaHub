@@ -145,7 +145,7 @@ function Header(props) {
           <form>
             {/* Início do dropdown do buscar */}
 
-            <Dropdown isOpen={dropsearchOpen} toggle={dropdownSearchToggle}>
+            <Dropdown isOpen={dropsearchOpen} toggle={dropdownSearchToggle} direction="down">
               <DropdownToggle
                 tag="span"
                 data-toggle="dropdown"
@@ -166,7 +166,9 @@ function Header(props) {
                 {publish && publish.map((publicacao)=>(
                   publicacao.status == 1 && 
                   publicacao.titulo.toLowerCase().indexOf(buscar) != -1 ?
-                  <div>{publicacao.titulo}</div> :
+                  <Link to={`/admin/published/${publicacao.idmaterial_publicado}`}>
+                    <p>{publicacao.titulo}</p>
+                    </Link> :
                   <> </>
                 ))}
               </DropdownMenu>
