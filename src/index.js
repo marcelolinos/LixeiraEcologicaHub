@@ -27,14 +27,17 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.js";
 import LoginLayout from "layouts/Login.js"
+import {PublicacoesProvider} from "./context/PublicacoesContext.js"
 
 ReactDOM.render(
   <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/login" render={(props) => <LoginLayout {...props} />} />
-      <Redirect to="/login/login" />
-    </Switch>
+    <PublicacoesProvider>
+      <Switch>
+        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+        <Route path="/login" render={(props) => <LoginLayout {...props} />} />
+        <Redirect to="/login/login" />
+      </Switch>
+    </PublicacoesProvider>
   </BrowserRouter>,
     document.getElementById("root")
   

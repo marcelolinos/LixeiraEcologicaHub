@@ -16,7 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Collapse,
@@ -36,12 +36,17 @@ import {
   Input,
 } from "reactstrap";
 
+import { PublicacoesContext } from "context/PublicacoesContext";
+
 import routes from "routes.js";
 
 function Header(props) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [color, setColor] = React.useState("transparent");
+  const [publish, setPublish] = useContext(PublicacoesContext)
+  const [dropsearchOpen, setDropsearchOpen] = useState(false)
+  const [buscar, setBuscar] = useState()
   const sidebarToggle = React.useRef();
   const location = useLocation();
   const toggle = () => {
@@ -52,9 +57,19 @@ function Header(props) {
     }
     setIsOpen(!isOpen);
   };
+
   const dropdownToggle = (e) => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  const dropdownSearchToggle = (e) => {
+    setDropsearchOpen(!dropsearchOpen)
+  }
+
+  const handleInput = (event) => {
+    setBuscar(event.target.value)
+  }
+
   const getBrand = () => {
     let brandName = "Default Brand";
     routes.map((prop, key) => {
@@ -128,14 +143,36 @@ function Header(props) {
         </NavbarToggler>
         <Collapse isOpen={isOpen} navbar className="justify-content-end">
           <form>
+            {/* Início do dropdown do buscar */}
+
+            <Dropdown isOpen={dropsearchOpen} toggle={dropdownSearchToggle}>
+              <DropdownToggle
+                tag="span"
+                data-toggle="dropdown"
+                aria-expanded={dropsearchOpen}
+              >
             <InputGroup className="no-border">
-              <Input placeholder="Search..." />
+              <Input placeholder="Search..." onChange={(e) => {handleInput(e)}} value={buscar}/>
+
               <InputGroupAddon addonType="append">
                 <InputGroupText>
                   <i className="nc-icon nc-zoom-split" />
                 </InputGroupText>
               </InputGroupAddon>
-            </InputGroup>
+              </InputGroup>
+
+              </DropdownToggle>
+              <DropdownMenu>
+                {publish && publish.map((publicacao)=>(
+                  publicacao.status == 1 && 
+                  publicacao.titulo.toLowerCase().indexOf(buscar) != -1 ?
+                  <div>{publicacao.titulo}</div> :
+                  <> </>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+
+            {/* Fim do dropdown do buscar */}
           </form>
           <Nav navbar>
             <Dropdown

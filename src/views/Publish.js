@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Line, Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import Data from "../server/ServerRest"
@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import '../assets/css/publish.css'
 import '../routes'
+import { PublicacoesContext } from "context/PublicacoesContext";
 const cors = [
     { id: 1 , name: "plastico", cor: "#EC7063" },
     { id: 2 , name: "bateria", cor: "#283747" },
@@ -22,7 +23,7 @@ const cors = [
     { id: 6 ,name: "papel", cor: "#F7DC6F" },
 ]
 function Publish(){
-    const [publish, setPublish] = useState()
+    const [publish, setPublish] = useContext(PublicacoesContext)
     const [cor, setCor] = useState(cors)
     
     useEffect(() =>{
