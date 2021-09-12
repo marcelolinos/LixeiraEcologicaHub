@@ -150,7 +150,7 @@ function User() {
                     </p>
                     <a>Level: {usuario.level}</a>
                     <div className="level">
-                      <div className="exp" style={{ width: usuario.exp }}></div>
+                      <div className="exp" style={{ width: usuario.exp}}></div>
                     </div>
                   </Col>
                 </Row>
