@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NotificationAlert from "react-notification-alert";
 import {
     Card,
@@ -14,10 +14,12 @@ import {
   } from "reactstrap";
 import { Link } from "react-router-dom";
 import Data from '../server/ServerRest'
+import { PublicacoesContext } from 'context/PublicacoesContext';
 
 function CreatePublish(){
     const [lixo, setLixo] = useState()
     const [post, setPost] = useState(add)
+    const [publish, setPublish] = useContext(PublicacoesContext)
     useEffect(() =>{
         getAllTipo()
     }, [])
@@ -55,10 +57,12 @@ function CreatePublish(){
             material: {idtipo_material: post.material},
             usuario: {idusuario: JSON.parse(localStorage.getItem('dados')).idusuario},
         }
+        
         console.log(postagem)
         notify("tc","success","Matérial publicado com sucesso!")
         Data.createPublicacao(postagem)
         .then(response =>{
+            setPublish([...publish, response.data])
             setPost({
                 idmaterial_publicado: response.postagem.idmaterial_publicado,
                 titulo: response.postagem.titulo,

@@ -167,7 +167,7 @@ function Header(props) {
                   publicacao.status == 1 && 
                   publicacao.titulo.toLowerCase().indexOf(buscar) != -1 ?
                   <Link to={`/admin/published/${publicacao.idmaterial_publicado}`}>
-                    <p>{publicacao.titulo}</p>
+                    <div>{publicacao.titulo}</div>
                     </Link> :
                   <> </>
                 ))}
