@@ -227,7 +227,7 @@ function Header(props) {
               toggle={(e) => dropdownToggle(e)}
             >
               <DropdownToggle caret nav>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19"
                color={ interessado && interessado.filter(l => l.id_usuario_contemplado).map(interesse =>
                 publicacao && publicacao.map(publicacao => interesse.idmaterial_publicado === publicacao.idmaterial_publicado && publicacao.status != 0).includes(true))[0] ? "#FF5733" : 
                  allinteressados && allinteressados.map(inte => 
