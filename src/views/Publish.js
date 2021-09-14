@@ -35,7 +35,6 @@ function Publish() {
         Data.getAllPublicacoes()
             .then(response => {
                 setPublish(response.data)
-                console.log(publish)
             })
             .catch(e => {
                 console.log(e)

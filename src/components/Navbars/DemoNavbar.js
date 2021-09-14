@@ -35,9 +35,9 @@ import {
   InputGroupAddon,
   Input,
 } from "reactstrap";
-
+import Data from "../../server/ServerRest"
 import { PublicacoesContext } from "context/PublicacoesContext";
-
+import "../../assets/css/navbar.css"
 import routes from "routes.js";
 
 function Header(props) {
@@ -49,6 +49,47 @@ function Header(props) {
   const [buscar, setBuscar] = useState()
   const sidebarToggle = React.useRef();
   const location = useLocation();
+  const [interessado, setInteressado] = useState()
+  const [publicacao, setPublicacao] = useState()
+  const [notificacao, setNotificacao] = useState(false)
+  const [allinteressados, setAllInteressados] = useState()
+
+  useEffect(() =>{
+    Interesses(JSON.parse(localStorage.getItem('dados')).idusuario)
+    Publicacao()
+    AllInteresses()
+  }, [],[],[])
+  const Interesses = id =>{
+      Data.getUsuarioInteressado(id)
+      .then(response =>{
+        setInteressado(response.data)
+        
+      })
+      .catch(e =>{
+        console.log(e)
+      })
+  }
+  const AllInteresses = () =>{
+    Data.getAllInteressados()
+    .then(response =>{
+      setAllInteressados(response.data)
+    })
+    .catch(e=>{
+      console.log(e)
+    })
+  }
+  const Publicacao = () =>{
+    Data.getAllPublicacoes()
+    .then(response =>{
+      setPublicacao(response.data)
+    })
+    .catch(e =>{
+      console.log(e)
+    })
+    return publicacao
+  }
+
+
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -104,6 +145,9 @@ function Header(props) {
       sidebarToggle.current.classList.toggle("toggled");
     }
   }, [location]);
+  console.log(allinteressados && allinteressados.map(inte => 
+    publicacao && publicacao.filter(p => p.usuario.idusuario == JSON.parse(localStorage.getItem('dados')).idusuario)
+    .map(publi => inte.idmaterial_publicado === publi.idmaterial_publicado && publi.status == 1).includes(true)).includes(true))
   return (
     // add or remove classes depending if we are on full-screen-maps page or not
     <Navbar
@@ -167,7 +211,7 @@ function Header(props) {
                   publicacao.status == 1 && 
                   publicacao.titulo.toLowerCase().indexOf(buscar) != -1 ?
                   <Link to={`/admin/published/${publicacao.idmaterial_publicado}`}>
-                    <div>{publicacao.titulo}</div>
+                    <p>{publicacao.titulo}</p>
                     </Link> :
                   <> </>
                 ))}
@@ -183,15 +227,53 @@ function Header(props) {
               toggle={(e) => dropdownToggle(e)}
             >
               <DropdownToggle caret nav>
-                <i className="nc-icon nc-bell-55" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+               color={ interessado && interessado.filter(l => l.id_usuario_contemplado).map(interesse =>
+                publicacao && publicacao.map(publicacao => interesse.idmaterial_publicado === publicacao.idmaterial_publicado && publicacao.status != 0).includes(true))[0] ? "#FF5733" : 
+                 allinteressados && allinteressados.map(inte => 
+                  publicacao && publicacao.filter(p => p.usuario.idusuario == JSON.parse(localStorage.getItem('dados')).idusuario)
+                  .map(publi => inte.idmaterial_publicado === publi.idmaterial_publicado && publi.status == 1).includes(true)).includes(true) ? "#FF5733" : "black"} fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+              </svg>
                 <p>
                   <span className="d-lg-none d-md-block">Some Actions</span>
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag="a">Action</DropdownItem>
-                <DropdownItem tag="a">Another Action</DropdownItem>
-                <DropdownItem tag="a">Something else here</DropdownItem>
+                {
+                  interessado && interessado.filter(l => l.id_usuario_contemplado).map(interesse => 
+                    publicacao && publicacao.map(publicacao => interesse.idmaterial_publicado === publicacao.idmaterial_publicado && publicacao.status != 0?(
+                      <Link style={{ textDecoration: 'none' }} to={"/admin/published/"+ publicacao.idmaterial_publicado}>
+                        <DropdownItem  id="notificacao" tag="p">
+                          <svg xmlns="http://www.w3.org/2000/svg" color="#2ECC71" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 20 16">
+                            <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                          </svg>
+                          Você foi escolhido para receber o matérial: {publicacao.titulo}.<br/> Entre em contato com o usuario que fez a publicação!
+                        </DropdownItem>
+                      </Link> 
+                    ):(
+                      <></>
+                    )))  
+                  
+                    
+                  
+                }
+                {
+                  allinteressados && allinteressados.map(inte => 
+                    publicacao && publicacao.filter(p => p.usuario.idusuario == JSON.parse(localStorage.getItem('dados')).idusuario)
+                    .map(publi => inte.idmaterial_publicado === publi.idmaterial_publicado && publi.status == 1 ?(
+                      <Link style={{ textDecoration: 'none' }} to={"/admin/published/"+ publi.idmaterial_publicado}>
+                        <DropdownItem  id="notificacao" tag="p">
+                          <svg xmlns="http://www.w3.org/2000/svg" color="#2ECC71" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 20 16">
+                            <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                          </svg>
+                          Um usuario ficou interessado no seu matérial: {publi.titulo}!
+                        </DropdownItem>
+                      </Link>
+                    ):(
+                      <></>
+                    )))
+                }
               </DropdownMenu>
             </Dropdown>
             <NavItem>

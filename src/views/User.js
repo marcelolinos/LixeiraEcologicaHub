@@ -17,7 +17,7 @@
 
 */
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -161,7 +161,7 @@ function User() {
                     <img
                       alt="..."
                       className="avatar-img"
-                      src={require("assets/img/mike.jpg").default}
+                      src={ require("assets/img/default-avatar.png").default}
                     />
                   </Col>
                   <Col xl="9" md="9" sm="8" className="text-left">
@@ -172,7 +172,7 @@ function User() {
                     </p>
                     <a>Level: {usuario.level}</a>
                     <div className="level">
-                      <div className="exp" style={{ width: usuario.exp}}></div>
+                      <div className="exp" style={{ width: usuario.exp > 100 ? 100 : usuario.exp}}></div>
                     </div>
                   </Col>
                 </Row>
@@ -187,6 +187,7 @@ function User() {
           {listaPublicacoes && listaPublicacoes.map((item) => (
             <Col lg="4" md="6" sm="6">
               <Card className="card-stats">
+              <Link to={`/admin/published/${item.idmaterial_publicado}`} style={{ textDecoration: 'none' }}>
                 <CardBody>
                   <Row>
                     <Col sm="4" md="4" xs="4">
@@ -225,6 +226,7 @@ function User() {
 
                   </Row>
                 </CardBody>
+                </Link>
               </Card>
             </Col>
           ))}

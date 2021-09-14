@@ -56,6 +56,10 @@ const getAllLixos = () => {
 const getLixo = id => {
     return http.get(`/tipo/${id}`);
 };
+//Procurar todos os interessados de todas as publicações
+const getAllInteressados = () =>{
+    return http.get("/interessados")
+}
 
 //Procurar Interessados da publicação 
 const getInteressado = id => {
@@ -66,8 +70,14 @@ const getInteressado = id => {
 const createInteressado = dados =>{
     return http.post(`/interessados/criar/`, dados)
 }
-
-
+//Procurar Interesses do usuario
+const getUsuarioInteressado = id =>{
+    return http.get(`/interessados/usuario/${id}`)
+}
+//Deletar Interessado
+const deleteInteressado = id =>{
+    return http.delete(`/interessados/delete/${id}`)
+}
 export default {
     getAllPublicacoes,
     getPublicacao,
@@ -82,6 +92,9 @@ export default {
     getLixo,
     getAllLixos,
     getInteressado,
-    createInteressado
+    getAllInteressados,
+    createInteressado,
+    getUsuarioInteressado,
+    deleteInteressado
 
 };

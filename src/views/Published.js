@@ -49,6 +49,7 @@ function Published(props){
     const [inte, setInte] = useState(interessado)
     const [list, setList] = useState(0)
     const [modal, setModal] = useState(false)
+    const [modal2, setModal2] = useState(false)
     const [submit, setSubmit] = useState(false)
     const [post, setPost] = useState(add)
     const [verific, setVerific] = useState(false)
@@ -84,6 +85,9 @@ function Published(props){
     //Função para abrir Modal
     const toggle = () =>{
         setModal(!modal)
+    }
+    const toggle2 = () =>{
+        setModal2(!modal2)
     }
     //Função para entrar na lista de interessados do matérial
     const Interesse = () =>{
@@ -338,6 +342,7 @@ function Published(props){
         }
     }
 
+
     const Interessado = (props) =>{
         console.log(props)
         var userInte = {
@@ -374,7 +379,7 @@ function Published(props){
           })
              
     }
-    console.log(list.length)
+
     return(
         <>
             <div className="content">
@@ -408,7 +413,16 @@ function Published(props){
                                         <p>Publicado por: {publicacao.usuario.nome}</p>
                                         {
                                             JSON.parse(localStorage.getItem('dados')).nome != publicacao.usuario.nome ? (
-                                                <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button> 
+                                                <div>
+                                                    <Button id="bt" onClick={Interesse} disabled={submit} color="success">Tenho Interesse</Button> 
+                                                    {
+                                                        list && list.filter(l => l.id_usuario_contemplado).map(p => p.id_usuario_contemplado)[0] === JSON.parse(localStorage.getItem('dados')).idusuario ? (
+                                                            <Button id="bt" onClick={toggle2} color="primary">ENTRE EM CONTATO</Button> 
+                                                        ) : (
+                                                            <></>
+                                                        )
+                                                    }
+                                                </div>
                                             ) : (
                                                 <div>
                                                 {
@@ -472,6 +486,16 @@ function Published(props){
                                 }
                             </tbody>
                         </Table>
+                    </ModalBody>
+                </Modal>
+                <Modal isOpen={modal2} toggle={toggle2} >
+                    <ModalHeader>Contato</ModalHeader>
+                    <ModalBody >
+                            
+                            <p>Nome: {publicacao.usuario.nome}</p>
+                            <p>Telefone: {publicacao.usuario.telefone}</p>
+                            <p>E-mail: {publicacao.usuario.email}</p>
+                            <p></p>
                     </ModalBody>
                 </Modal>
             </div>
